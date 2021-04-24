@@ -16,4 +16,4 @@ st.write("Your code size is", qr_size)
 
 # test
 qr_maker.qr_code(hyper_link, qr_size)
-st.image("QR_logo.png", caption='Your QR-logo')
+st.image("./images/QR_logo.png", caption='Your QR-logo')

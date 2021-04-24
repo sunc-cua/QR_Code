@@ -9,19 +9,19 @@ def qr_code(hyper_link="https://engineering.catholic.edu/eecs/index.html", qr_si
     """
     # (1) QR CODE generation for a given link
     qr_code = pyqrcode.QRCode(hyper_link, error = 'H')
-    with open('QR.png', 'wb') as f: # saved to disk
+    with open('images/QR.png', 'wb') as f: # saved to disk
         qr_code.png(f, scale=qr_size)
 
 
     # (2) Adding logo
     # which QR code you want to use
-    img = Image.open('QR.png')
+    img = Image.open('images/QR.png')
     width, height = img.size
     img = img.convert("RGBA") # keep the logo's colors
 
 
     # which LOGO: Open the logo image
-    logo = Image.open("cua.jpg")
+    logo = Image.open("images/cua.jpg")
 
     #how big the logo we want to put in the qr code (20% by 20%)
     logo_w, logo_h =  width/5, height/5
@@ -39,4 +39,4 @@ def qr_code(hyper_link="https://engineering.catholic.edu/eecs/index.html", qr_si
     img.paste(logo, (xmin, ymin, xmax, ymax))
 
     # save to disk
-    img.save("QR_logo.png")
+    img.save("images/QR_logo.png")
