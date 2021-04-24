@@ -1,6 +1,8 @@
 #  QR code generator
 import pyqrcode
 from PIL import Image
+import png
+
 
 def qr_code(hyper_link="https://engineering.catholic.edu/eecs/index.html", qr_size=10):
     """
@@ -9,7 +11,7 @@ def qr_code(hyper_link="https://engineering.catholic.edu/eecs/index.html", qr_si
     """
     # (1) QR CODE generation for a given link
     qr_code = pyqrcode.QRCode(hyper_link, error = 'H')
-    with open('images/QR.png', 'wb') as f: # saved to disk
+    with open('images/QR.png', 'wb') as f:
         qr_code.png(f, scale=qr_size)
 
 
