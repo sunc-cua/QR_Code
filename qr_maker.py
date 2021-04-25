@@ -4,41 +4,52 @@ from PIL import Image
 import png
 
 
-def qr_code(hyper_link="https://engineering.catholic.edu/eecs/index.html", qr_size=10):
+def qr_code(link="https://engineering.catholic.edu/eecs/index.html", logo = False, size = 8):
     """
+    paras:
+        hyper_link: string type. your url for qr code. default is the CUA EECS index page
+        logo_name: user's logo image name (uploaded). It can be png or jpg format. Default is the None.
+        size: the QR size: int.
 
-
+    return:
+        image file name (saved in the local disk, .png format.): String type
     """
-    # (1) QR CODE generation for a given link
-    qr_code = pyqrcode.QRCode(hyper_link, error = 'H')
-    with open('images/QR.png', 'wb') as f:
-        qr_code.png(f, scale=qr_size)
+    # if no logo uploaded
+    if logo == False:
+        # (1) QR CODE generation for a given link
+        qr_code = pyqrcode.QRCode(link, error = 'H')
+        f_name = './images/QR.png'
+        with open(f_name, 'wb') as f:
+            qr_code.png(f, scale=size)
+        return f_name
+
+    # if logo file is given
+    else:
+        # (2.1) QR code first
+        qr = Image.open('./images/QR.png')
+        width, height = qr.size
+        qr = qr.convert("RGBA")   # keep the logo's colors
 
 
-    # (2) Adding logo
-    # which QR code you want to use
-    img = Image.open('images/QR.png')
-    width, height = img.size
-    img = img.convert("RGBA") # keep the logo's colors
+        # (2.2) Open the logo image
+        logo = Image.open("./images/logo.png")
 
+        #how big the logo we want to put in the qr code (20% by 20%)
+        logo_w, logo_h =  width/5, height/5
 
-    # which LOGO: Open the logo image
-    logo = Image.open("images/cua.jpg")
+        # Calculate xmin, ymin, xmax, ymax to put the logo
+        xmin = int((width / 2) - (logo_w / 2))
+        xmax = int((width / 2) + (logo_w / 2))
+        ymin = int((height/ 2) - (logo_h / 2))
+        ymax = int((height/ 2) + (logo_h / 2))
 
-    #how big the logo we want to put in the qr code (20% by 20%)
-    logo_w, logo_h =  width/5, height/5
+        # resize the logo as calculated
+        logo = logo.resize((xmax - xmin, ymax - ymin))
 
-    # Calculate xmin, ymin, xmax, ymax to put the logo
-    xmin = int((width / 2) - (logo_w / 2))
-    xmax = int((width / 2) + (logo_w / 2))
-    ymin = int((height/ 2) - (logo_h / 2))
-    ymax = int((height/ 2) + (logo_h / 2))
+        # (2.3) put the logo in the qr code
+        qr.paste(logo, (xmin, ymin, xmax, ymax))
 
-    # resize the logo as calculated
-    logo = logo.resize((xmax - xmin, ymax - ymin))
-
-    # put the logo in the qr code
-    img.paste(logo, (xmin, ymin, xmax, ymax))
-
-    # save to disk
-    img.save("images/QR_logo.png")
+        # (2.4) save to disk
+        f_name = './images/QR-logo.png'
+        qr.save(f_name)
+        return f_name
