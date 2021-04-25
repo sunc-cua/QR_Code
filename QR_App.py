@@ -18,7 +18,8 @@ st.image(qr_name, caption='Your QR.png')
 
 # (3.2) without logo
 # User's logo: upload the logo image(png, jpg types)
-logo_file = st.file_uploader('Logo File uploader',type=['png','jpeg','jpg'])
+st.title('Add your personal Logo? ')
+logo_file = st.file_uploader("click the botton to upload a picture", type=['png','jpeg','jpg'])
 if logo_file:
     st.write("logo name", logo_file.name)
     open("./images/logo.png", "wb").write(logo_file.getbuffer())
