@@ -9,7 +9,7 @@ hyper_link  = st.text_input("Type in your hyperline for QR code such as:", "http
 st.write("Test your link first:", hyper_link)
 
 # (2) User's input: QR Code Size (inches)
-qr_size = st.slider('Slide me', min_value = 6, max_value = 12, value = 8)
+qr_size = st.slider('Slide me', min_value = 6, max_value = 12, value = 6)
 st.write("Your code size is", qr_size)
 
 ## (3.1) without logo
